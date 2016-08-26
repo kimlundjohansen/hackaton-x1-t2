@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Dropbox.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WorkOnlineDropbox.Controllers
 {
@@ -11,6 +12,7 @@ namespace WorkOnlineDropbox.Controllers
     {
         private const string appId = "ob52ze9qj8ie7mo";
         private const string appSecret = "xq6j5gfne6f0c0u";
+        private const string token = "paA3u5DURtAAAAAAAAAAC8xrqihjihw0nto5nT_8v6zU-zqQEyDZxPfhVF7GlP2A";
         private string oauth2State;
         public string AccessToken { get; private set; }
         public string UserId { get; private set; }
@@ -41,11 +43,23 @@ namespace WorkOnlineDropbox.Controllers
             return View();
         }
 
-        public IActionResult Authorized()
+        public async Task<IActionResult> Authorized()
         {
+            var consumerKey = "your api key";
+            var consumerSecret = "your api secret";
+
+            var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
+
+            var client = new DropboxClient(token, new DropboxClientConfig("SimpleBlogDemo"));
+
+            var test = await client.Files.ListFolderAsync("");
+
+            await client.Files.CreateFolderAsync("/test");
+            var test2 = await client.Files.ListFolderAsync("");
+
             return View();
         }
-       
+
 
         public IActionResult DropboxAuth()
         {
