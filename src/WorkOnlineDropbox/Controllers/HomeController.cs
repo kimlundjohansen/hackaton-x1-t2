@@ -9,8 +9,8 @@ namespace WorkOnlineDropbox.Controllers
 {
     public class HomeController : Controller
     {
-        private const string appId = ""; // INSERT APPID HERE
-        private const string appSecret = ""; //INSERT APP SECRET HERE
+        private const string appId = "ob52ze9qj8ie7mo";
+        private const string appSecret = "xq6j5gfne6f0c0u";
         private string oauth2State;
         public string AccessToken { get; private set; }
         public string UserId { get; private set; }
