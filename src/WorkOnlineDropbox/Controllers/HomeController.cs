@@ -31,11 +31,15 @@ namespace WorkOnlineDropbox.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public async Task<IActionResult> Folders()
         {
-            ViewData["Message"] = "Your contact page.";
+            var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
 
-            return View();
+            var client = new DropboxClient(token, new DropboxClientConfig("SimpleBlogDemo"));
+
+            var folders = await client.Files.ListFolderAsync("");
+
+            return View(folders);
         }
 
         public IActionResult Error()
@@ -45,15 +49,7 @@ namespace WorkOnlineDropbox.Controllers
 
         public async Task<IActionResult> Authorized()
         {
-            var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
-
-            var client = new DropboxClient(token, new DropboxClientConfig("SimpleBlogDemo"));
-
-            var files = await client.Files.ListFolderAsync("");
-
-            await client.Files.CreateFolderAsync("/test");
-
-            var folders = await client.Files.ListFolderAsync("");
+          
 
             return View();
         }

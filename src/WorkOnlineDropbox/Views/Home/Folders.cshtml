@@ -1,0 +1,16 @@
+﻿@model Dropbox.Api.Files.ListFolderResult
+
+@{
+    ViewData["Title"] = "Folders";
+}
+
+
+
+@{ foreach(var folder in Model.Entries)
+    {
+        <p>@folder.Name</p>
+
+
+
+}}
+
