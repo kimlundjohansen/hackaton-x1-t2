@@ -19,15 +19,25 @@ namespace WorkOnlineDropbox.Controllers
         public bool Result { get; private set; }
         private const string RedirectUri = "http://localhost:55448/Home/Authorized";
 
-        public IActionResult Index()
-        {            
+        public async Task<IActionResult> Index()
+        {
+            this.oauth2State = Guid.NewGuid().ToString("N");
+            Uri authorizeUri = DropboxOAuth2Helper.GetAuthorizeUri(OAuthResponseType.Token, appId, new Uri(RedirectUri), state: oauth2State);
+
+            ViewData["Message"] = "Your application description page.";
+
+            var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
+
+            var client = new DropboxClient(token, new DropboxClientConfig("SimpleBlogDemo"));
+
+            var files = await client.Files.ListFolderAsync("");
+
+
             return View();
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
@@ -45,16 +55,6 @@ namespace WorkOnlineDropbox.Controllers
 
         public async Task<IActionResult> Authorized()
         {
-            var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
-
-            var client = new DropboxClient(token, new DropboxClientConfig("SimpleBlogDemo"));
-
-            var files = await client.Files.ListFolderAsync("");
-
-            await client.Files.CreateFolderAsync("/test");
-
-            var folders = await client.Files.ListFolderAsync("");
-
             return View();
         }
 
