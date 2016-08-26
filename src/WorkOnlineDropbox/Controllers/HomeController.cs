@@ -45,17 +45,15 @@ namespace WorkOnlineDropbox.Controllers
 
         public async Task<IActionResult> Authorized()
         {
-            var consumerKey = "your api key";
-            var consumerSecret = "your api secret";
-
             var uri = new Uri("https://api.dropbox.com/1/oauth/request_token");
 
             var client = new DropboxClient(token, new DropboxClientConfig("SimpleBlogDemo"));
 
-            var test = await client.Files.ListFolderAsync("");
+            var files = await client.Files.ListFolderAsync("");
 
             await client.Files.CreateFolderAsync("/test");
-            var test2 = await client.Files.ListFolderAsync("");
+
+            var folders = await client.Files.ListFolderAsync("");
 
             return View();
         }
